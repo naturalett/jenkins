@@ -1,0 +1,68 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1268.v6eb_e2ee1a_85a">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@3606.v0b_d8b_e512dcf">
+    <script>@Grab(group = &apos;com.twilio.sdk&apos;, module = &apos;twilio&apos;, version = &apos;9.2.1&apos;)
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import groovy.transform.Field
+
+pipeline {
+    agent {
+        docker {
+            image &apos;docker:19.03.12&apos;
+            args &apos;-v /var/run/docker.sock:/var/run/docker.sock&apos;
+        }
+    }
+    post {
+        success {
+          script {
+            try {
+              load &quot;$JENKINS_HOME/env-file.groovy&quot;
+              Twilio.init(env.accountSid, env.authToken)
+              Message message = Message.creator(
+                      new com.twilio.type.PhoneNumber(env.phoneNumber),
+                      env.SERVICE_SID,
+                      &quot;Your Pipeline: ${env.JOB_NAME}, Number: ${env.BUILD_NUMBER} passed successfully&quot;)
+                  .create();
+              echo message.getSid()
+            } catch(Exception e) {
+              echo &quot;Failed to load env-file.groovy&quot;
+            }
+            currentBuild.description = &quot;Passed successfully. Message sent!&quot;
+          }
+        }
+        failure {
+          script {
+            try {
+              load &quot;$JENKINS_HOME/env-file.groovy&quot;
+              Twilio.init(env.accountSid, env.authToken)
+              Message message = Message.creator(
+                      new com.twilio.type.PhoneNumber(env.phoneNumber),
+                      env.SERVICE_SID,
+                      &quot;Your Pipeline: ${env.JOB_NAME}, Number: ${env.BUILD_NUMBER} failed&quot;)
+                  .create();
+              echo message.getSid()
+            } catch(Exception e) {
+              echo &quot;Failed to load env-file.groovy&quot;
+            }
+            currentBuild.description = &quot;Failed. Message sent!&quot;
+          }
+        }
+        always {
+          script {           
+            deleteDir()
+          }
+        }
+    }
+}
+</script>
+    <sandbox>false</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
