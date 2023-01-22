@@ -17,6 +17,11 @@ class TestHelloWorld(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(b'GET method called', response.data)
 
+    def test_exit(self):
+        """Test root context."""
+        response = self.app.get('/exit', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(b'Goodbye!', response.data)
 
 if __name__ == '__main__':
     unittest.main()

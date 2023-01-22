@@ -5,6 +5,10 @@ app = flask.Flask(__name__)
 def home():
     return 'Hello, World!'
 
+@app.route('/exit')
+def exit():
+    return 'Goodbye!'
+
 @app.route("/", methods=["GET", "POST"])
 def response():
     # print(requests)
