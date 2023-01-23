@@ -18,23 +18,23 @@ pipeline {
         }
         stage('Initialization') {
             steps {
-              script {
+                script {
                 docker.image('alpine').inside {
                     sh """
                     apk add curl
                     curl http://checkip.amazonaws.com > publicIP""".trim()
                 }
                 publicIP = readFile('publicIP').trim()
-              }
+                }
             }
         }
         stage('Build') {
             steps {
-              script {
+                script {
                 dir(applicationDir) {
-                  customImage = docker.build("${dockerHubOwner}/hello-world:${env.BUILD_ID}")
+                    customImage = docker.build("${dockerHubOwner}/hello-world:${env.BUILD_ID}")
                 }
-              }
+                }
             }
         }
         stage('Deploy') {

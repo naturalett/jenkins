@@ -1,10 +1,10 @@
 pipeline {
-    agent any
-    stages {
-        stage('Clone') {
-            steps {
-                git branch: 'main', url: 'https://github.com/naturalett/getting-started.git'
-            }            
+  agent any
+  stages {
+    stage('Clone') {
+        steps {
+            git branch: 'main', url: 'https://github.com/naturalett/jenkins.git'
         }
     }
+  }
 }

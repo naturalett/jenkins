@@ -32,7 +32,7 @@ def projectNames = [
 ]
 
 for (projectName in projectNames) {
-  flowDefinition = new org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition(scm, &quot;jenkins/pipelines/${projectName}.groovy&quot;)
+  flowDefinition = new org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition(scm, &quot;Jenkins/pipelines/${projectName}.groovy&quot;)
   myJob = hudson.model.Hudson.instance.getJob(projectName)
   println(&quot;${projectName} is being created&quot;)
   job = new org.jenkinsci.plugins.workflow.job.WorkflowJob(parent, projectName)

@@ -5,7 +5,6 @@ pipeline {
             args '--name workshop'
         }
     }
-
   stages {
     stage('Do job stage') {
       steps {

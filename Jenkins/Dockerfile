@@ -1,6 +1,6 @@
 FROM jenkins/jenkins:2.387-jdk11
 
-ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+# ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 
 RUN jenkins-plugin-cli --plugins \
   docker-plugin:1.2.10 \

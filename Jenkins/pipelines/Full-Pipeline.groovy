@@ -20,7 +20,6 @@ pipeline {
         stage('Clone') {
             steps {
                 deleteDir()
-
                 git branch: params.branch, url: 'https://github.com/naturalett/jenkins.git'
             }
         }
