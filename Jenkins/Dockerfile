@@ -7,7 +7,8 @@ RUN jenkins-plugin-cli --plugins \
   docker-workflow:563.vd5d2e5c4007f \
   git:5.0.0 \
   workflow-aggregator:590.v6a_d052e5a_a_b_5 \
-  junit junit:1166.va_436e268e972
+  junit junit:1166.va_436e268e972 \
+  github:1.36.1
 
 USER root
 

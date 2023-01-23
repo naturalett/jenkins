@@ -3,6 +3,7 @@
 cd key
 terraform init
 terraform apply
+chmod 0600 workshop.pem
 ```
 
 ### Provision a free-tier EC2 instance in AWS to run the tutorial and leverage the cloud's scalability and accessibility
